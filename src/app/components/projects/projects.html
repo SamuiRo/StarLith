@@ -1,0 +1,61 @@
+<div class="projects-component">
+  <header class="header">
+    <div class="pattern">
+      <div class="container">
+        <div class="pattern-inner"></div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Projects</h1>
+    </div>
+  </header>
+  <main class="main">
+    <aside class="sidebar-menu">
+      <nav class="menu-nav">
+        <div class="content">
+          @for (section of menuSections; track section.id) {
+          <button
+            class="side-menu-button"
+            [class.active]="selectedItem?.id === section.id"
+            (click)="selectItem(section)"
+          >
+            <span>{{ section.title }}</span>
+          </button>
+          }
+        </div>
+      </nav>
+    </aside>
+    <section class="content-area">
+      @if (selectedItem) {
+      <article class="content-panel markdown-container">
+        <markdown [data]="selectedItem.content"></markdown>
+      </article>
+      }
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-nav">
+      <div class="footer-content">
+        <span class="hint-text">{{ text }}</span>
+        <div class="hint-controls">
+          @for (hint of hints; track $index) {
+          <div class="hint-item">
+            <div class="hint-keys">
+              @for (key of hint.keys; track $index) {
+                <kbd class="key" >{{ key }}</kbd>
+              }
+            </div>
+            <span class="hint-label">{{ hint.label }}</span>
+          </div>
+          }
+         
+        </div>
+      </div>
+    </div>
+    <div class="pattern">
+      <div class="container">
+        <div class="pattern-inner"></div>
+      </div>
+    </div>
+  </footer>
+</div>

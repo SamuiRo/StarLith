@@ -1,0 +1,22 @@
+[
+      {
+        "id": "frontend",
+        "title": "Frontend",
+        "contentFile": "frontend.md"
+      },
+      {
+        "id": "backend",
+        "title": "Backend",
+        "contentFile": "backend.md"
+      },
+      {
+        "id": "cloud",
+        "title": "Cloud",
+        "contentFile": "cloud.md"
+      },
+      {
+        "id": "automation",
+        "title": "Automation",
+        "contentFile": "automation.md"
+      }
+    ]

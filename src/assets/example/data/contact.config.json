@@ -1,0 +1,12 @@
+[
+  {
+    "id": "info",
+    "title": "Info",
+    "contentFile": "info.md"
+  },
+  {
+    "id": "languages",
+    "title": "Languages",
+    "contentFile": "languages.md"
+  }
+]

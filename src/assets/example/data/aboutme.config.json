@@ -1,0 +1,22 @@
+[
+  {
+    "id": "profile",
+    "title": "Profile",
+    "contentFile": "profile.md"
+  },
+  {
+    "id": "achievements",
+    "title": "Achievements",
+    "contentFile": "achievements.md"
+  },
+  {
+    "id": "story",
+    "title": "Story",
+    "contentFile": "story.md"
+  },
+  {
+    "id": "faq",
+    "title": "FAQ",
+    "contentFile": "faq.md"
+  }
+]

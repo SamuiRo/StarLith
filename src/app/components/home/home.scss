@@ -1,0 +1,221 @@
+@import "../../../assets/styles/variables.scss";
+
+.home-component {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  box-shadow: inset 0 0 150px rgba($color-primary, 0.4),
+    inset 0 0 150px rgba($color-primary, 0.3);
+  .background-base {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../../../assets/images/home_background.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    filter: blur(2px);
+    z-index: -3;
+  }
+  .background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    @include grid-background;
+  }
+  .content {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Cormorant, monospace;
+      position: relative;
+      overflow: hidden;
+      margin: 0 0 20px 0;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .title {
+        color: #efefe4;
+        user-select: none;
+        font-size: 100px;
+        font-family: "Cormorant", monospace;
+        font-weight: 400;
+        letter-spacing: 0.16em;
+        text-shadow: 0.3rem 0.3rem 0 rgba(77, 73, 62, 0.3);
+        
+        @media (max-width: 768px) {
+          font-size: 60px;
+          letter-spacing: 0.12em;
+        }
+        
+        @media (max-width: 480px) {
+          font-size: 48px;
+          letter-spacing: 0.1em;
+        }
+        
+        @media (max-width: 375px) {
+          font-size: 40px;
+          letter-spacing: 0.08em;
+        }
+      }
+      .title-line {
+        width: 80%;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          rgba(#0b0b0b, 0.1),
+          #cfc7be 40%,
+          rgba(#0b0b0b, 0.1)
+        );
+        opacity: 0.8;
+        
+        @media (max-width: 768px) {
+          width: 70%;
+        }
+      }
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+      align-items: center;
+      
+      @media (max-width: 768px) {
+        gap: 0.75rem;
+      }
+    }
+  }
+}
+
+.background-stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+@function multiple-box-shadow($n) {
+  $value: "#{random(2560)}px #{random(2560)}px 0 0 #{$stars-color}";
+  @for $i from 2 through $n {
+    $value: "#{$value} , #{random(2560)}px #{random(2560)}px 0 0 #{$stars-color}";
+  }
+  @return unquote($value);
+}
+
+$shadows-small: multiple-box-shadow(70);
+$shadows-medium: multiple-box-shadow(20);
+$shadows-big: multiple-box-shadow(10);
+
+#stars {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: $shadows-small;
+  animation: animStar 50s linear infinite, twinkle 1.5s ease-in-out infinite;
+  z-index: -2;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 2560px;
+    width: 1px;
+    height: 1px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: $shadows-small;
+    z-index: -2;
+  }
+}
+
+#stars2 {
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: $shadows-medium;
+  animation: animStar 100s linear infinite,
+    twinkle 2s ease-in-out infinite alternate;
+  z-index: -2;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 2560px;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: $shadows-medium;
+    z-index: -2;
+  }
+}
+
+#stars3 {
+  width: 3px;
+  height: 3px;
+  position: absolute;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: $shadows-big;
+  animation: animStar 150s linear infinite,
+    twinkle 2.5s ease-in-out infinite alternate;
+  z-index: -2;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 2560px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: $shadows-big;
+    z-index: -2;
+  }
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2560px);
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    filter: brightness(100%);
+  }
+  50% {
+    filter: brightness(150%);
+  }
+  100% {
+    filter: brightness(100%);
+  }
+}

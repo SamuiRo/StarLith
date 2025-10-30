@@ -1,0 +1,24 @@
+<div class="home-component">
+  <div class="background-base"></div>
+  <div class="background-overlay"></div>
+  <div class="background-stars">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+  </div>
+  <div class="content">
+    <div class="header">
+      <p class="title noise-background">StarLith</p>
+      <div class="title-line"></div>
+    </div>
+    <div class="menu">
+      @for (item of menuItems; track item.route; let i = $index) {
+      <app-main-menu-button
+        [routerLink]="item.route"
+        [isActive]="isSelected(i)"
+        >{{ item.label }}</app-main-menu-button
+      >
+      }
+    </div>
+  </div>
+</div>

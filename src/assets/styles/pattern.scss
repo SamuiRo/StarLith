@@ -1,0 +1,160 @@
+@import "./variables.scss";
+
+
+// ============================================
+// PATTERN DECORATIONS
+// ============================================
+.pattern {
+  border-top: 2px solid $pattern-color;
+}
+
+.pattern-inner {
+  height: 40px;
+  background-size: 50px 3px, 50px 1px, 50px 1px, 50px 1px, 50px 1px, 50px 1px,
+    50px 1px, 50px 1px, 50px 1px;
+  background-position: 0 0, 22px 4px, 22px 5px, 22px 6px, 22px 7px, 28px 12px,
+    28px 13px, 28px 14px, 28px 15px;
+  background-image: linear-gradient(
+      90deg,
+      $pattern-color,
+      $pattern-color 10px,
+      transparent 10px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.4),
+      rgba($pattern-color, 0.4) 1px,
+      rgba($pattern-color, 0.8) 1px,
+      rgba($pattern-color, 0.8) 2px,
+      rgba($pattern-color, 0.9) 2px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.4) 3px,
+      rgba($pattern-color, 0.4) 4px,
+      transparent 4px,
+      transparent 12px,
+      rgba($pattern-color, 0.4) 12px,
+      rgba($pattern-color, 0.4) 13px,
+      rgba($pattern-color, 0.8) 13px,
+      rgba($pattern-color, 0.8) 14px,
+      rgba($pattern-color, 0.9) 14px,
+      rgba($pattern-color, 0.9) 15px,
+      rgba($pattern-color, 0.4) 15px,
+      rgba($pattern-color, 0.4) 16px,
+      transparent 16px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.9),
+      rgba($pattern-color, 0.9) 1px,
+      rgba($pattern-color, 1) 1px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 3px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.9) 4px,
+      transparent 4px,
+      transparent 12px,
+      rgba($pattern-color, 0.9) 12px,
+      rgba($pattern-color, 0.9) 13px,
+      rgba($pattern-color, 1) 13px,
+      rgba($pattern-color, 1) 14px,
+      rgba($pattern-color, 1) 14px,
+      rgba($pattern-color, 1) 15px,
+      rgba($pattern-color, 0.9) 15px,
+      rgba($pattern-color, 0.9) 16px,
+      transparent 16px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.9),
+      rgba($pattern-color, 0.9) 1px,
+      rgba($pattern-color, 1) 1px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 3px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.9) 4px,
+      transparent 4px,
+      transparent 12px,
+      rgba($pattern-color, 0.9) 12px,
+      rgba($pattern-color, 0.9) 13px,
+      rgba($pattern-color, 1) 13px,
+      rgba($pattern-color, 1) 14px,
+      rgba($pattern-color, 1) 14px,
+      rgba($pattern-color, 1) 15px,
+      rgba($pattern-color, 0.9) 15px,
+      rgba($pattern-color, 0.9) 16px,
+      transparent 16px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.4),
+      rgba($pattern-color, 0.4) 1px,
+      rgba($pattern-color, 0.8) 1px,
+      rgba($pattern-color, 0.8) 2px,
+      rgba($pattern-color, 0.9) 2px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.4) 3px,
+      rgba($pattern-color, 0.4) 4px,
+      transparent 4px,
+      transparent 12px,
+      rgba($pattern-color, 0.4) 12px,
+      rgba($pattern-color, 0.4) 13px,
+      rgba($pattern-color, 0.8) 13px,
+      rgba($pattern-color, 0.8) 14px,
+      rgba($pattern-color, 0.9) 14px,
+      rgba($pattern-color, 0.9) 15px,
+      rgba($pattern-color, 0.4) 15px,
+      rgba($pattern-color, 0.4) 16px,
+      transparent 16px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.4),
+      rgba($pattern-color, 0.4) 1px,
+      rgba($pattern-color, 0.8) 1px,
+      rgba($pattern-color, 0.8) 2px,
+      rgba($pattern-color, 0.9) 2px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.4) 3px,
+      rgba($pattern-color, 0.4) 4px,
+      transparent 4px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.9),
+      rgba($pattern-color, 0.9) 1px,
+      rgba($pattern-color, 1) 1px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 3px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.9) 4px,
+      transparent 4px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.9),
+      rgba($pattern-color, 0.9) 1px,
+      rgba($pattern-color, 1) 1px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 2px,
+      rgba($pattern-color, 1) 3px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.9) 4px,
+      transparent 4px
+    ),
+    linear-gradient(
+      90deg,
+      rgba($pattern-color, 0.4),
+      rgba($pattern-color, 0.4) 1px,
+      rgba($pattern-color, 0.8) 1px,
+      rgba($pattern-color, 0.8) 2px,
+      rgba($pattern-color, 0.9) 2px,
+      rgba($pattern-color, 0.9) 3px,
+      rgba($pattern-color, 0.4) 3px,
+      rgba($pattern-color, 0.4) 4px,
+      transparent 4px
+    );
+  background-repeat: repeat-x;
+}

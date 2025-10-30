@@ -1,0 +1,33 @@
+<div
+  class="button-container"
+  [class.active]="isActive"
+  (mouseenter)="onHover()"
+  (mouseleave)="onLeave()"
+  (click)="onClick()"
+>
+  <!-- Декоративні лінії -->
+  <div class="ornamental-line" #ornamentalLine>
+    <div class="line-segment left"></div>
+    <div class="dot left"></div>
+    <div class="line-segment center"></div>
+    <div class="dot right"></div>
+    <div class="line-segment right"></div>
+  </div>
+
+  <!-- Текст кнопки -->
+  <div class="button-text">
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Контейнер для particles -->
+  <div class="particles-container" #particlesContainer>
+    @for (particle of particles; track $index) {
+    <div
+      class="particle"
+      [style.left.px]="particle.x"
+      [style.top.px]="particle.y"
+      [attr.data-index]="particle.id"
+    ></div>
+    }
+  </div>
+</div>

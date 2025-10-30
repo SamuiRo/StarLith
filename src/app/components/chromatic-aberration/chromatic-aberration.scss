@@ -1,0 +1,16 @@
+.chromatic-wrapper {
+  width: 100%;
+  height: 100%;
+  
+  will-change: filter;
+  transform: translateZ(0);
+  
+  transition: filter 0.3s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chromatic-wrapper {
+    filter: none !important;
+    transition: none;
+  }
+}

@@ -1,0 +1,66 @@
+$color-primary: #2e2e2e;
+
+$pattern-color: #2e2e2e; 
+$grid-pattern-color: rgba(0, 0, 0, 0.07);
+$color-primary: #2e2e2e;
+$color-text-primary: #2a2a2a;
+$color-white: #ffffff;
+
+$sub-menu-background: #cbbfa4;
+$sub-menu-button-background: #c8c2aa;
+
+$letter-spacing-default: 0.1rem;
+$letter-spacing-header: 0.7rem;
+
+$transition-default: all 0.1s ease;
+
+$stars-color: #8fa98f;
+
+
+
+@mixin vertical-line-pattern {
+  background-image: linear-gradient(
+    90deg,
+    rgba($color-primary, 0.2),
+    rgba($color-primary, 0.2) 14px,
+    transparent 14px,
+    transparent 20px,
+    rgba($color-primary, 0.2) 20px,
+    rgba($color-primary, 0.2) 23px,
+    transparent 23px
+  );
+}
+
+@mixin grid-background {
+  background-size: 4px 4px;
+  background-image: linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, 0.07) 4px
+    ),
+    linear-gradient(transparent, transparent 3px, rgba(0, 0, 0, 0.07) 4px);
+}
+
+$primary: #f4f4f4; // Pure white (main text)
+$secondary: #c0c0c0; // Light gray (borders/separators)
+$dark: #1a1a1a; // Deep black (backgrounds)
+$accent: #ffffff; // Bright white (highlights)
+$warning: #f4f4f4; // White (warnings in Nier are white)
+$error: #f4f4f4; // White (even errors are white in Nier)
+$success: #f4f4f4; // White (consistent with game's UI)
+$info: #f4f4f4; // White (all text is white/light)
+$pod: #f4f4f4; // White (Pod text)
+$system: #f4f4f4; // White (system messages)
+$dim: #808080; // Darker gray for less important text
+$system_core_grey: #b8b8b8;
+$data: #a7d6d6;
+$muted_amber: #cbbfa4;
+$aqua_screen: #9cc4b2;
+$pale_green: #8fa98f;
+$dark_gray: #2e2e2e;
+$silver: #a6a6a6;
+$warm_white: #f2f2f2;
+$red_alert: #a62626;
+$cool_grey: #555555;
+$beige_gold: #cbbfa4;
