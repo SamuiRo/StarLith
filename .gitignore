@@ -1,6 +1,9 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
 /src/assets/prod/
+.firebaserc
+firebase.json
+*.cache
 
 # Compiled output
 /dist

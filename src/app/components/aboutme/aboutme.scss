@@ -18,8 +18,12 @@
 
 @mixin grid-background {
   background-size: 4px 4px;
-  background-image: 
-    linear-gradient(90deg, transparent, transparent 3px, $grid-pattern-color 4px),
+  background-image: linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      $grid-pattern-color 4px
+    ),
     linear-gradient(transparent, transparent 3px, $grid-pattern-color 4px);
 }
 
@@ -57,15 +61,15 @@ $breakpoint-mobile: 768px;
   font-weight: 300;
   letter-spacing: $letter-spacing-default;
 
-  box-shadow: 
-    inset 0 0 150px rgba($color-primary, 0.4),
+  box-shadow: inset 0 0 150px rgba($color-primary, 0.4),
     inset 0 0 150px rgba($color-primary, 0.3);
 
   .container {
     padding: 0 $container-padding;
+    h1 {
+      white-space: nowrap;
+    }
   }
-
-  
 
   // ============================================
   // HEADER
@@ -112,8 +116,8 @@ $breakpoint-mobile: 768px;
 
     @media (max-width: $breakpoint-mobile) {
       width: 100%;
-      max-height: 30vh; 
-      overflow-y: auto; 
+      max-height: 20vh;
+      overflow-y: auto;
     }
 
     .menu-nav {
@@ -123,7 +127,7 @@ $breakpoint-mobile: 768px;
       height: 100%;
 
       @media (max-width: $breakpoint-mobile) {
-        justify-content: flex-start; 
+        justify-content: flex-start;
         height: auto;
       }
 
@@ -242,7 +246,7 @@ $breakpoint-mobile: 768px;
     width: 100%;
 
     @media (max-width: $breakpoint-mobile) {
-      display: none; 
+      display: none;
     }
 
     .footer-nav {
@@ -299,8 +303,7 @@ $breakpoint-mobile: 768px;
           background: linear-gradient(to bottom, #4a4a4a 0%, #2a2a2a 100%);
           border: 1px solid #1a1a1a;
           border-radius: 3px;
-          box-shadow: 
-            0 1px 0 rgba($color-white, 0.1) inset,
+          box-shadow: 0 1px 0 rgba($color-white, 0.1) inset,
             0 1px 2px rgba(0, 0, 0, 0.3);
 
           color: $color-white;
