@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MainMenuButton } from '../main-menu-button/main-menu-button';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,8 @@ export class Home implements OnInit {
     { label: 'Contact', route: '/contact' },
   ];
 
+  readonly cvPath = `${environment.dataPath}files/CV.pdf`;
+
   selectedIndex: number = -1;
   isMobile: boolean = false;
 
@@ -28,11 +31,10 @@ export class Home implements OnInit {
     if (!this.isMobile) {
       this.selectedIndex = 0;
     }
-
-    window.addEventListener('resize', () => this.checkIfMobile());
   }
 
-  private checkIfMobile(): void {
+  @HostListener('window:resize')
+  checkIfMobile(): void {
     const wasMobile = this.isMobile;
     this.isMobile =
       window.innerWidth <= 768 ||

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
@@ -41,8 +41,8 @@ const enum KeyCode {
   styleUrl: './aboutme.scss',
 })
 export class Aboutme implements OnInit {
-  @Input() text: string = 'Navigation.';
-  @Input() hints: KeyboardHint[] = [
+  readonly text: string = 'Navigation.';
+  readonly hints: KeyboardHint[] = [
     { keys: ['W', 'S', '↑', '↓'], label: 'Select' },
     { keys: ['Enter'], label: 'Confirm' },
     { keys: ['Esc'], label: 'Back' },

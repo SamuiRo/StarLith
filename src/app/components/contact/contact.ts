@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
@@ -41,18 +41,20 @@ const enum KeyCode {
   styleUrl: './contact.scss',
 })
 export class Contact implements OnInit {
- @Input() text: string = 'Navigation.';
-   @Input() hints: KeyboardHint[] = [
-     { keys: ['W', 'S', '↑', '↓'], label: 'Select' },
-     { keys: ['Enter'], label: 'Confirm' },
-     { keys: ['Esc'], label: 'Back' },
-   ];
- 
-   menuSections: MenuItem[] = [];
-   selectedItem: MenuItem | null = null;
-   private currentIndex: number = 0;
- 
-   constructor(private router: Router, private http: HttpClient) {}
+  readonly text: string = 'Navigation.';
+  readonly hints: KeyboardHint[] = [
+    { keys: ['W', 'S', '↑', '↓'], label: 'Select' },
+    { keys: ['Enter'], label: 'Confirm' },
+    { keys: ['Esc'], label: 'Back' },
+  ];
+
+  menuSections: MenuItem[] = [];
+  selectedItem: MenuItem | null = null;
+  private currentIndex: number = 0;
+
+  readonly cvPath = `${environment.dataPath}files/CV.pdf`;
+
+  constructor(private router: Router, private http: HttpClient) {}
  
    async ngOnInit(): Promise<void> {
      await this.loadMenuSections();

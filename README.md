@@ -8,6 +8,10 @@ A sleek, interactive resume website inspired by the UI/UX design of NieR: Automa
 ---
 ![Sub Menu Demo](src/assets/images/sub-menu-demo.png)
 
+## 📚 Documentation
+
+Detailed docs live in [`docs/`](docs/README.md): [architecture](docs/ARCHITECTURE.md), [content management](docs/CONTENT.md), [deployment](docs/DEPLOYMENT.md), and [known issues](docs/ISSUES.md).
+
 ## ✨ Features
 
 - 🎮 **NieR: Automata inspired UI** - Authentic game-style interface with retro-futuristic design

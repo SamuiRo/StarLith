@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://starlithdev.web.app/home</loc>
+  </url>
+  <url>
+    <loc>https://starlithdev.web.app/aboutme</loc>
+  </url>
+  <url>
+    <loc>https://starlithdev.web.app/projects</loc>
+  </url>
+  <url>
+    <loc>https://starlithdev.web.app/skills</loc>
+  </url>
+  <url>
+    <loc>https://starlithdev.web.app/contact</loc>
+  </url>
+</urlset>

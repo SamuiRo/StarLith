@@ -14,32 +14,32 @@ export const routes: Routes = [
   },
   {
     path: 'loading',
-    title: 'Loading',
+    title: 'Loading — StarLith',
     component: Loading,
   },
   {
     path: 'home',
-    title: 'Home',
+    title: 'Serhii Vasiliev — Full-Stack Engineer (Node.js / Angular)',
     component: Home,
   },
   {
     path: 'aboutme',
-    title: 'About Me',
+    title: 'About Me — Serhii Vasiliev | StarLith',
     component: Aboutme,
   },
   {
     path: 'projects',
-    title: 'Projects',
+    title: 'Projects — Serhii Vasiliev | StarLith',
     component: Projects,
   },
   {
     path: 'skills',
-    title: 'Skills',
+    title: 'Skills — Serhii Vasiliev | StarLith',
     component: Skills,
   },
   {
     path: 'contact',
-    title: 'Contact',
+    title: 'Contact — Serhii Vasiliev | StarLith',
     component: Contact,
   },
   {
