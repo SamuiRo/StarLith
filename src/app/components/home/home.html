@@ -12,16 +12,13 @@
       <div class="title-line"></div>
     </div>
     <div class="menu">
-      @for (item of menuItems; track item.route; let i = $index) {
+      @for (item of menuItems; track item.label; let i = $index) {
       <app-main-menu-button
-        [routerLink]="item.route"
         [isActive]="isSelected(i)"
+        (buttonClick)="onMenuItemClick(item)"
         >{{ item.label }}</app-main-menu-button
       >
       }
     </div>
-    <a class="cv-download" [href]="cvPath" download="CV.pdf">
-      <span>↓ Download CV</span>
-    </a>
   </div>
 </div>

@@ -25,31 +25,31 @@ Detailed docs live in [`docs/`](docs/README.md): [architecture](docs/ARCHITECTUR
 ## 🗂️ Project Structure
 
 ```
+├── content/                  # Site content — outside src/, see docs/CONTENT.md
+│   ├── example/               # Example content for development
+│   │   ├── data/
+│   │   │   ├── aboutme.config.json
+│   │   │   ├── projects.config.json
+│   │   │   ├── skills.config.json
+│   │   │   └── contact.config.json
+│   │   └── content/
+│   │       ├── aboutme/
+│   │       │   ├── profile.md
+│   │       │   ├── achievements.md
+│   │       │   ├── story.md
+│   │       │   └── faq.md
+│   │       ├── projects/
+│   │       ├── skills/
+│   │       └── contact/
+│   └── prod/                  # Production content (create this, gitignored)
 ├── src/
-│   ├── components/
+│   ├── app/components/
 │   │   ├── loading/
 │   │   ├── home/
 │   │   ├── aboutme/
 │   │   ├── projects/
 │   │   ├── skills/
 │   │   └── contact/
-│   ├── assets/
-│   │   ├── example/          # Example content for development
-│   │   │   ├── data/
-│   │   │   │   ├── aboutme.config.json
-│   │   │   │   ├── projects.config.json
-│   │   │   │   ├── skills.config.json
-│   │   │   │   └── contact.config.json
-│   │   │   └── content/
-│   │   │       ├── aboutme/
-│   │   │       │   ├── profile.md
-│   │   │       │   ├── achievements.md
-│   │   │       │   ├── story.md
-│   │   │       │   └── faq.md
-│   │   │       ├── projects/
-│   │   │       ├── skills/
-│   │   │       └── contact/
-│   │   └── prod/             # Production content (create this)
 │   └── environments/
 │       ├── environment.ts
 │       └── environment.prod.ts
@@ -99,14 +99,15 @@ npm run build:prod
 
 ### Step 1: Create Production Content Folder
 
-Create a `prod` folder inside `src/assets/`:
+Create a `prod` folder inside the top-level `content/` directory (see
+[docs/CONTENT.md](docs/CONTENT.md) for why content lives outside `src/`):
 
 ```bash
-mkdir -p src/assets/prod/data
-mkdir -p src/assets/prod/content/aboutme
-mkdir -p src/assets/prod/content/projects
-mkdir -p src/assets/prod/content/skills
-mkdir -p src/assets/prod/content/contact
+mkdir -p content/prod/data
+mkdir -p content/prod/content/aboutme
+mkdir -p content/prod/content/projects
+mkdir -p content/prod/content/skills
+mkdir -p content/prod/content/contact
 ```
 
 ### Step 2: Copy and Customize Configuration Files
@@ -114,7 +115,7 @@ mkdir -p src/assets/prod/content/contact
 Copy the example config files to your prod folder:
 
 ```bash
-cp src/assets/example/data/*.json src/assets/prod/data/
+cp content/example/data/*.json content/prod/data/
 ```
 
 **Configuration Structure:**
@@ -152,7 +153,7 @@ Each section (About Me, Projects, Skills, Contact) has a `config.json` file that
 
 Create `.md` files in the respective content folders:
 
-**Example - `src/assets/prod/content/aboutme/profile.md`:**
+**Example - `content/prod/content/aboutme/profile.md`:**
 
 ```markdown
 # John Doe
@@ -170,9 +171,9 @@ Passionate developer with 5+ years of experience in building modern web applicat
 ### Step 4: Customize All Sections
 
 Repeat the process for:
-- **Projects** (`src/assets/prod/content/projects/`)
-- **Skills** (`src/assets/prod/content/skills/`)
-- **Contact** (`src/assets/prod/content/contact/`)
+- **Projects** (`content/prod/content/projects/`)
+- **Skills** (`content/prod/content/skills/`)
+- **Contact** (`content/prod/content/contact/`)
 
 ## ⌨️ Keyboard Controls
 
@@ -191,8 +192,7 @@ Repeat the process for:
   "start:prod": "ng serve --configuration production",
   "build": "ng build",
   "build:prod": "ng build --configuration production",
-  "test": "ng test",
-  "lint": "ng lint"
+  "test": "ng test"
 }
 ```
 
@@ -229,7 +229,7 @@ Main navigation hub with links to all sections.
 If this project gains popularity, the following improvements are planned:
 
 - [ ] **How To Free Host** - Clear instructions on how to host for free on Firebase and other resources
-- [ ] **Enhanced Content Structure** - Improved folder organization for easier content management
+- [x] **Enhanced Content Structure** - Content moved to a top-level `content/` folder, outside `src/` (see [docs/CONTENT.md](docs/CONTENT.md))
 - [ ] **Full Configuration Export** - Move all hardcoded content to configuration files
 - [ ] **Component Optimization** - Refactor shared component logic to reduce code duplication
 - [ ] **Style Optimization** - Improve CSS architecture and reduce bundle size

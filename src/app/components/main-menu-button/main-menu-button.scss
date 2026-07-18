@@ -23,15 +23,14 @@
    ============================================ */
 .ornamental-line {
   position: absolute;
-  top: 50%; 
+  bottom: 6px;
   left: 0;
   right: 0;
   height: 1px;
-  transform: translateY(-50%);
   display: flex;
   align-items: center;
-  opacity: 0; 
-  pointer-events: none; 
+  opacity: 0;
+  pointer-events: none;
   z-index: 2;
 }
 
@@ -58,23 +57,13 @@
 }
 
 .dot {
-  position: absolute; 
   width: 5px;
   height: 5px;
   background: #EEE7D1;
   border-radius: 50%;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
   opacity: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.dot.left {
-  left: 185px; 
-}
-
-.dot.right {
-  right: 185px; 
+  flex-shrink: 0;
 }
 /* ============================================
    BUTTON_TEXT

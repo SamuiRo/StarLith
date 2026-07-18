@@ -5,14 +5,25 @@ the text. No code changes are needed to edit content.
 
 ## Two Content Trees
 
-| Folder | Committed? | Used by | Purpose |
-|---|---|---|---|
-| `src/assets/example/` | ✅ yes | `npm run start`, `npm run build` | Demo/template content for anyone cloning the repo |
-| `src/assets/prod/` | ❌ gitignored | `npm run start:prod`, `npm run build:prod` | Real personal content |
+Content lives in a top-level `content/` folder, **outside `src/`** — it's
+data, not application code, so it's kept separate from the Angular app.
 
-> ⚠️ Because `src/assets/prod/` is gitignored, it exists **only on this
+| Folder (on disk) | Committed? | Used by | Purpose |
+|---|---|---|---|
+| `content/example/` | ✅ yes | `npm run start`, `npm run build` | Demo/template content for anyone cloning the repo |
+| `content/prod/` | ❌ gitignored | `npm run start:prod`, `npm run build:prod` | Real personal content |
+
+> ⚠️ Because `content/prod/` is gitignored, it exists **only on this
 > machine**. Keep a private backup (private repo, archive, or cloud copy) —
 > losing the disk means losing all real site content.
+
+At build time, `angular.json` maps each folder into the app's static assets
+(`content/example/` → served at `assets/example/`, `content/prod/` → served
+at `assets/prod/`) — this is why every runtime path below (in configs,
+markdown `<img>` tags, `environment.dataPath`) still starts with `assets/`
+rather than `content/`. If `content/prod/` doesn't exist (e.g. a fresh clone
+before anyone has added personal content), the build simply skips it —
+`npm run build`/`npm run start` (example content) work fine either way.
 
 Both trees have the same layout:
 
@@ -67,9 +78,11 @@ profile photo:
 <img src="assets/prod/image/photo.webp" alt="photo" width="300" height="300"/>
 ```
 
-Note: image paths are relative to the site root and must include the content
-tree (`assets/prod/...` or `assets/example/...`), so an `<img>` in prod content
-must point into `assets/prod/`.
+Note: image paths are runtime URLs, not disk paths — relative to the site
+root and must include the served content tree (`assets/prod/...` or
+`assets/example/...`), so an `<img>` in prod content must point into
+`assets/prod/` even though the file itself lives on disk under
+`content/prod/`.
 
 ### Project File Convention
 
@@ -107,11 +120,13 @@ Project files follow this structure (see `content/projects/*.md`):
 
 ## Downloadable Files (CV)
 
-The "Download CV" button on Home and Contact links to
-`<dataPath>files/CV.pdf` (e.g. `src/assets/prod/files/CV.pdf` in production).
+The "Download CV" button on Home (5th menu item) and Contact links to
+`<dataPath>files/CV.pdf` (a runtime URL — resolves to `assets/prod/files/CV.pdf`
+in production).
 
-- **Location:** `src/assets/prod/files/CV.pdf` (create the `files/` folder if
-  it doesn't exist yet — it's gitignored along with the rest of `prod/`).
+- **Location on disk:** `content/prod/files/CV.pdf` (create the `files/`
+  folder if it doesn't exist yet — it's gitignored along with the rest of
+  `prod/`).
 - **Filename must be exactly `CV.pdf`.** The name is intentionally generic
   (not `CV_FirstName_LastName.pdf`) so the button code has zero hardcoded
   personal data — anyone reusing this template just drops their own

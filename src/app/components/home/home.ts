@@ -1,24 +1,31 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { MainMenuButton } from '../main-menu-button/main-menu-button';
 import { environment } from '../../../environments/environment';
 
+interface MenuItem {
+  label: string;
+  route: string;
+  download?: boolean;
+}
+
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterModule, MainMenuButton],
+  imports: [CommonModule, MainMenuButton],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class Home implements OnInit {
-  menuItems = [
+  readonly cvPath = `${environment.dataPath}files/CV.pdf`;
+
+  menuItems: MenuItem[] = [
     { label: 'About Me', route: '/aboutme' },
     { label: 'Projects', route: '/projects' },
     { label: 'Skills', route: '/skills' },
     { label: 'Contact', route: '/contact' },
+    { label: 'Download CV', route: this.cvPath, download: true },
   ];
-
-  readonly cvPath = `${environment.dataPath}files/CV.pdf`;
 
   selectedIndex: number = -1;
   isMobile: boolean = false;
@@ -88,12 +95,27 @@ export class Home implements OnInit {
 
   private confirmSelection(): void {
     if (this.selectedIndex >= 0) {
-      this.navigateTo(this.menuItems[this.selectedIndex].route);
+      this.activateItem(this.menuItems[this.selectedIndex]);
     }
   }
 
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
+  onMenuItemClick(item: MenuItem): void {
+    this.activateItem(item);
+  }
+
+  private activateItem(item: MenuItem): void {
+    if (item.download) {
+      this.downloadFile(item.route);
+    } else {
+      this.router.navigate([item.route]);
+    }
+  }
+
+  private downloadFile(href: string): void {
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = 'CV.pdf';
+    link.click();
   }
 
   isSelected(index: number): boolean {

@@ -51,7 +51,7 @@ export class MainMenuButton implements AfterViewInit, OnDestroy, OnChanges {
   particles: Particle[] = [];
 
   private readonly ANIMATION_CONFIG = {
-    LINE_WIDTH: 80,
+    LINE_WIDTH: 60,
     CONTAINER_FADE_DURATION: 200,
     LINE_EXPAND_DURATION: 400,
     DOT_APPEAR_DURATION: 300,

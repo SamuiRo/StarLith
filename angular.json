@@ -25,6 +25,16 @@
               "src/assets",
               {
                 "glob": "**/*",
+                "input": "content/example",
+                "output": "/assets/example"
+              },
+              {
+                "glob": "**/*",
+                "input": "content/prod",
+                "output": "/assets/prod"
+              },
+              {
+                "glob": "**/*",
                 "input": "public"
               }
             ],

@@ -19,7 +19,7 @@
             [class.active]="selectedItem?.id === section.id"
             (click)="selectItem(section)"
           >
-            <span>{{ section.title }}</span>
+            <span class="label"><span class="label-text" appMarqueeText>{{ section.title }}</span></span>
           </button>
           }
         </div>

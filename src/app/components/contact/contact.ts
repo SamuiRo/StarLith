@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { forkJoin, firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { MarqueeText } from '../../directives/marquee-text/marquee-text';
 
 interface MenuItem {
   id: string;
@@ -36,7 +37,7 @@ const enum KeyCode {
 
 @Component({
   selector: 'app-contact',
-  imports: [CommonModule, MarkdownModule],
+  imports: [CommonModule, MarkdownModule, MarqueeText],
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })
