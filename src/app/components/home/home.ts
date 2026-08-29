@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainMenuButton } from '../main-menu-button/main-menu-button';
 import { environment } from '../../../environments/environment';
@@ -10,13 +10,20 @@ interface MenuItem {
   download?: boolean;
 }
 
+interface KeyboardHint {
+  keys: string[];
+  label: string;
+}
+
+const HINT_DURATION_MS = 20000;
+
 @Component({
   selector: 'app-home',
   imports: [CommonModule, MainMenuButton],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home implements OnInit {
+export class Home implements OnInit, OnDestroy {
   readonly cvPath = `${environment.dataPath}files/CV.pdf`;
 
   menuItems: MenuItem[] = [
@@ -27,8 +34,17 @@ export class Home implements OnInit {
     { label: 'Download CV', route: this.cvPath, download: true },
   ];
 
+  readonly hintText: string = 'Navigation.';
+  readonly hints: KeyboardHint[] = [
+    { keys: ['W', 'S', '↑', '↓'], label: 'Select' },
+    { keys: ['Enter'], label: 'Confirm' },
+  ];
+
   selectedIndex: number = -1;
   isMobile: boolean = false;
+  hintVisible: boolean = false;
+
+  private hintTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   constructor(private router: Router) {}
 
@@ -37,7 +53,30 @@ export class Home implements OnInit {
 
     if (!this.isMobile) {
       this.selectedIndex = 0;
+      this.showHintTemporarily();
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.hintTimeoutId !== null) {
+      clearTimeout(this.hintTimeoutId);
+    }
+  }
+
+  private showHintTemporarily(): void {
+    this.hintVisible = true;
+    this.hintTimeoutId = setTimeout(() => {
+      this.hintVisible = false;
+      this.hintTimeoutId = null;
+    }, HINT_DURATION_MS);
+  }
+
+  dismissHint(): void {
+    if (this.hintTimeoutId !== null) {
+      clearTimeout(this.hintTimeoutId);
+      this.hintTimeoutId = null;
+    }
+    this.hintVisible = false;
   }
 
   @HostListener('window:resize')
