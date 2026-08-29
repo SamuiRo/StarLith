@@ -22,7 +22,11 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets",
+              {
+                "glob": "home_background.png",
+                "input": "src/assets/images",
+                "output": "/assets/images"
+              },
               {
                 "glob": "**/*",
                 "input": "content/example",

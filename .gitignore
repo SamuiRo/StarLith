@@ -45,3 +45,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Business planning — NEVER commit to this public repo
+/docs/ideas/

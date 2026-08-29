@@ -2,11 +2,11 @@
 
 A sleek, interactive resume website inspired by the UI/UX design of NieR: Automata. Built with Angular 20 and fully customizable through markdown files and JSON configuration.
 
-![Loading Demo](src/assets/images/loading-demo.png)
+![Loading Demo](docs/images/loading-demo.png)
 ---
-![Demo](src/assets/images/menu-demo.png)
+![Demo](docs/images/menu-demo.png)
 ---
-![Sub Menu Demo](src/assets/images/sub-menu-demo.png)
+![Sub Menu Demo](docs/images/sub-menu-demo.png)
 
 ## 📚 Documentation
 
