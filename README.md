@@ -1,6 +1,8 @@
-# NieR: Automata Style Resume
+# StarLith — Interactive Portfolio
 
-A sleek, interactive resume website inspired by the UI/UX design of NieR: Automata. Built with Angular 20 and fully customizable through markdown files and JSON configuration.
+A sleek, interactive resume website with a retro-futuristic interface inspired by the visual language of the NieR series. Built with Angular 20 and fully customizable through markdown files and JSON configuration.
+
+> Unofficial fan tribute. Not affiliated with, endorsed by, or sponsored by Square Enix. No original game assets are used. See the Disclaimer section below.
 
 ![Loading Demo](docs/images/loading-demo.png)
 ---
@@ -14,7 +16,7 @@ Detailed docs live in [`docs/`](docs/README.md): [architecture](docs/ARCHITECTUR
 
 ## ✨ Features
 
-- 🎮 **NieR: Automata inspired UI** - Authentic game-style interface with retro-futuristic design
+- 🎮 **Retro-futuristic game-style UI** - CRT-flavoured interface with scanlines, grain and glitch effects
 - 📝 **Markdown-based content** - Easy content management through `.md` files
 - ⚙️ **JSON configuration** - Dynamic menu sections controlled by simple config files
 - 🎹 **Keyboard navigation** - Full keyboard support (W/S/Arrow keys, Enter, Esc)
@@ -199,7 +201,7 @@ Repeat the process for:
 ## 🎨 Sections Overview
 
 ### 1. Loading Screen
-Initial loading animation with NieR-style aesthetics.
+Initial loading animation with CRT boot aesthetics.
 
 ### 2. Home
 Main navigation hub with links to all sections.
@@ -249,7 +251,19 @@ If this project gains popularity, the following improvements are planned:
 
 ## 📄 License
 
-MIT License - feel free to use this template for your own portfolio!
+The source code authored by StarLith is licensed under the **GNU GPL v3** —
+see [LICENSE](LICENSE).
+
+The GPL applies only to material for which the repository author has the
+authority to grant a license. It does not grant rights to third-party
+trademarks, copyrighted works, game assets, characters, or other third-party
+intellectual property.
+
+## ⚖️ Disclaimer
+
+This is an independent personal portfolio and an unofficial fan tribute
+inspired by the visual language of the NieR series. It is not affiliated with,
+endorsed by, or sponsored by Square Enix. No original game assets are used.
 
 ## 🤝 Contributing
 
@@ -271,4 +285,6 @@ If you like this project, please give it a star on GitHub!
 
 ---
 
-**Made with ❤️ and inspired by NieR: Automata**
+**Made with ❤️ by StarLith**
+
+*Unofficial fan tribute · Not affiliated with or endorsed by Square Enix.*

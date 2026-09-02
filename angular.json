@@ -23,11 +23,6 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               {
-                "glob": "home_background.png",
-                "input": "src/assets/images",
-                "output": "/assets/images"
-              },
-              {
                 "glob": "**/*",
                 "input": "content/example",
                 "output": "/assets/example"

@@ -20,37 +20,43 @@
       >
       }
     </div>
-  </div>
-  @if (hintVisible && !isMobile) {
-  <div class="keyboard-hint">
-    <div class="hint-panel">
-      <div class="hint-content">
-        <span class="hint-text">{{ hintText }}</span>
-        <div class="hint-controls">
-          @for (hint of hints; track $index) {
-          <div class="hint-item">
-            <div class="hint-keys">
-              @for (key of hint.keys; track $index) {
-              <kbd class="key">{{ key }}</kbd>
-              }
+    @if (hintVisible && !isMobile) {
+    <div class="keyboard-hint">
+      <div class="hint-panel">
+        <div class="hint-content">
+          <span class="hint-text">{{ hintText }}</span>
+          <div class="hint-controls">
+            @for (hint of hints; track $index) {
+            <div class="hint-item">
+              <div class="hint-keys">
+                @for (key of hint.keys; track $index) {
+                <kbd class="key">{{ key }}</kbd>
+                }
+              </div>
+              <span class="hint-label">{{ hint.label }}</span>
             </div>
-            <span class="hint-label">{{ hint.label }}</span>
+            }
           </div>
-          }
+          <button
+            type="button"
+            class="hint-close"
+            (click)="dismissHint()"
+            aria-label="Close hint"
+          >
+            &times;
+          </button>
         </div>
-        <button
-          type="button"
-          class="hint-close"
-          (click)="dismissHint()"
-          aria-label="Close hint"
-        >
-          &times;
-        </button>
-      </div>
-      <div class="hint-timer-track">
-        <div class="hint-timer"></div>
+        <div class="hint-timer-track">
+          <div class="hint-timer"></div>
+        </div>
       </div>
     </div>
+    }
   </div>
-  }
+  <footer class="site-disclaimer">
+    <p class="disclaimer-text">
+      Unofficial fan tribute &middot; Not affiliated with or endorsed by Square
+      Enix. No original game assets are used.
+    </p>
+  </footer>
 </div>

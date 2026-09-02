@@ -1,6 +1,6 @@
 # StarLith Documentation
 
-Documentation for the StarLith portfolio site — a NieR: Automata-styled resume built with Angular 20.
+Documentation for the StarLith portfolio site — an interactive resume built with Angular 20.
 
 ## Contents
 
@@ -10,7 +10,6 @@ Documentation for the StarLith portfolio site — a NieR: Automata-styled resume
 | [CONTENT.md](CONTENT.md) | Content management: configs, markdown files, example vs prod content |
 | [DEPLOYMENT.md](DEPLOYMENT.md) | Build configurations and Firebase Hosting deployment |
 | [ISSUES.md](ISSUES.md) | Known issues and technical debt from the code review |
-| [IDEAS.md](IDEAS.md) | Unscheduled future ideas (e.g. a NieR-style mini-game) |
 
 ## Quick Orientation
 
