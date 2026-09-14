@@ -1,6 +1,7 @@
 # Known Issues & Technical Debt
 
-Code review results from 2026-07-17. Status: ⬜ open · ✅ resolved.
+Code review results from 2026-07-17, follow-up review 2026-09-13 (items
+22–28). Status: ⬜ open · ✅ resolved.
 
 This document covers everything related to code and configuration (content
 planning notes that originally lived in `site_update/` have since been
@@ -93,6 +94,10 @@ titles were generic ("Home", "Loading"); all content renders via JS + HTTP.
 
 Verified locally: all meta tags, JSON-LD, and titles are correctly present
 in the DOM on every route.
+
+> 🔄 **Updated by item 21 (2026-09-01):** the Open Graph / Twitter image is
+> no longer `assets/images/home_background.png` (1344×768) but a dedicated
+> `public/og_cover.jpg` (1300×630).
 
 **Deliberately not done:** prerender/SSG. Since content loads via HttpClient
 at runtime rather than being bundled, full SSR/SSG would require a separate
@@ -468,6 +473,212 @@ startup, there's no hot config reload here.
 
 ---
 
+## 🟣 Fan tribute & licensing (2026-09-01)
+
+### ✅ 19. Third-party IP: disclaimer, license wording, original text only
+
+Following a review of the site's position as an unofficial fan tribute, a
+handful of low-cost changes separate "inspired by" from "copied from".
+
+**Resolved 2026-09-01:**
+- **Story** (`content/prod/content/aboutme/story.md`): removed a verbatim
+  in-game quote and its attribution line — the only literal third-party text
+  on the site. An HTML-comment placeholder marks the slot for the owner's own
+  closing line (invisible on the page, but readable by anyone who opens the
+  raw `.md` URL).
+- **FAQ** (`content/prod/content/aboutme/faq.md`): "Are you a NieR series
+  fan?" now states the site is an unofficial fan tribute, not affiliated with,
+  endorsed by or sponsored by Square Enix, and uses no original game assets.
+  "Can I use this portfolio design for myself?" became "Can I use this code
+  for your own portfolio?" — it invites forking the **code** under GPL v3 and
+  says the license covers only what the author can license. The old "fork the
+  design, make it your own" wording is gone.
+- **README**: title `NieR: Automata Style Resume` → `StarLith — Interactive
+  Portfolio`; the game name left the title, feature list and loading-screen
+  description; added a disclaimer note under the intro and a `Disclaimer`
+  section. The **License** section said `MIT` while the repository's
+  `LICENSE` file is **GNU GPL v3** — fixed, with a scope note that the GPL
+  grants no rights to third-party trademarks or copyrighted works.
+- **Home**: a thin disclaimer strip below the fold (see item 20 for the
+  layout consequence).
+- **docs/**: `docs/README.md` no longer describes the site as
+  "NieR: Automata-styled"; the unscheduled-ideas note moved to the gitignored
+  `docs/ideas/` (the `.gitignore` entry already existed).
+- Rules for future content edits are written down in
+  [CONTENT.md → Third-Party IP Guardrails](CONTENT.md#third-party-ip-guardrails).
+
+**Verified 2026-09-13 on the live site:** `faq.md` contains the
+non-affiliation text, `story.md` no longer contains the quote, the deployed
+bundle contains `.site-disclaimer`. In tracked files the game name remains
+only in the README (intentionally, next to the disclaimer) and in two SCSS
+comments in `variables.scss`.
+
+### ✅ 20. Keyboard hint dropped below the first screen
+
+**Files:** `src/app/components/home/{home.html,home.scss}`
+
+Adding the disclaimer strip made `.home-component` taller than the viewport
+(`min-height: 100vh` + ~54 px). The hint was `position: fixed; bottom: 2rem`,
+yet it rendered cut off at the very bottom of the screen. Cause:
+`.home-component` has `content-visibility: auto`, whose **layout
+containment** makes the element the containing block for `fixed`
+descendants. While the component was exactly `100vh` that coincided with
+the viewport, so nobody noticed; once it grew, `bottom: 2rem` was measured
+from the bottom of the whole component — below the fold.
+
+**Resolved 2026-09-01:** the hint moved inside `.content` (exactly `100vh`),
+which got `position: relative`; the hint itself became `position: absolute`.
+It now belongs to the first screen: scrolling down moves it away with the
+menu and reveals the strip without overlap. The existing
+`translate(-50%, …)` keyframes kept working unchanged.
+
+Verified on the dev server at 1280×720: hint `646–700 px`, strip starts at
+`720 px` (no overlap); after scrolling, `elementFromPoint` inside the strip
+returns `.disclaimer-text`.
+
+### ✅ 21. Link-preview image and background refresh
+
+**Files:** `src/index.html`, `angular.json`, `public/og_cover.jpg`,
+`src/assets/images/home_background*`
+
+- All five home background variants were replaced with new artwork
+  (`home_background.{webp,png}`, `home_background_mobile.{webp,png}`,
+  `home_background_small.webp`). The desktop pair is now 1535×1024 instead of
+  1344×768; `background-size: cover` handles the different aspect ratio.
+- `og:image` / `twitter:image` pointed at `assets/images/home_background.png`,
+  which `angular.json` copied into the build through a one-off asset glob.
+  That PNG is now ~2.1 MB — too heavy for a preview image. **Resolved:** a
+  dedicated `public/og_cover.jpg` (1300×630, ~650 KB), meta tags updated
+  including `og:image:width/height`, one-off glob removed.
+- Backgrounds deliberately **stayed** in `src/assets/images/` rather than
+  moving to `public/`: SCSS-referenced files ship with a content hash, which
+  gives cache-busting for free — exactly what a background swap needs. Only
+  files that require a stable URL live in `public/`. Written up in
+  [ARCHITECTURE.md](ARCHITECTURE.md#static-assets-srcassetsimages-vs-public).
+
+Verified with `npm run build:prod`: `og_cover.jpg` at the build root,
+`assets/images/` absent from the output, background hash changed
+(`YSN764UJ` → `3H6YBCUZ`). Live on `starlithdev.web.app` since `v1.0.1`.
+
+---
+
+## 🔍 Follow-up review (2026-09-13)
+
+Full pass over components, services, routing and hosting. **No bug breaks
+the site today:** all four sections load every configured file from the
+production content tree (19 markdown files, plus CV, photo and OG image —
+all `200`), zero console errors across routes, unknown routes redirect
+correctly. The items below are ranked by user impact.
+
+### ⬜ 22. Back button loops through the boot screen — 🟠 high
+
+**File:** `src/app/components/loading/loading.ts:59`
+
+`router.navigate(['/home'])` pushes a new history entry, so the stack after
+a normal visit is `[referrer, /loading, /home]`. Pressing **Back** on
+`/home` returns to `/loading`, which replays the whole boot sequence
+(~6 s) and then pushes `/home` again. A recruiter arriving from LinkedIn has
+to press Back twice within the animation to leave; one press just restarts
+the intro. The sequence also isn't cancelled when the component is
+destroyed, so an in-app navigation during the animation gets overridden by
+the final `navigate`.
+
+**Fix:** `this.router.navigate(['/home'], { replaceUrl: true })`, plus a
+`destroyed` flag checked before navigating.
+
+Confirmed by reading the code; a live repro in the tooling browser wasn't
+possible (the hidden preview pane throttles `requestAnimationFrame`, so the
+animejs sequence never finishes there).
+
+### ⬜ 23. Keyboard navigation disabled on touch-capable desktops — 🟡 medium
+
+**File:** `src/app/components/home/home.ts` → `checkIfMobile()`
+
+`isMobile` is true when `'ontouchstart' in window` **or**
+`navigator.maxTouchPoints > 0`. Touchscreen laptops and many Windows
+convertibles report touch points even when used with a keyboard and mouse,
+so for them the home menu silently loses keyboard navigation, the
+preselected item and the hint — the core interaction of the site. Section
+pages don't check this at all, so behaviour differs between screens.
+
+**Fix:** decide by input capability, not touch presence:
+`matchMedia('(hover: none) and (pointer: coarse)')`, keeping the
+`≤ 768px` width check.
+
+### ⬜ 24. Missing markdown file renders `index.html` in production — 🟡 medium
+
+**Files:** section components → `loadFromMarkdown()`; `firebase.json`
+
+Firebase's catch-all rewrite answers requests for non-existent files with
+`200` + `index.html` (verified on the live site:
+`/assets/prod/content/projects/does_not_exist.md` → `200 text/html`).
+`HttpClient` therefore never errors, the `# No Data` fallback never runs,
+and the section panel renders the app shell's HTML as markdown. The local
+dev server returns a real `404`, so `npm run start:prod` doesn't reproduce
+it. Latent — every configured file exists today — but one typo in a
+`contentFile` would ship unnoticed.
+
+**Fix (either):** reject responses that look like HTML in
+`loadFromMarkdown()` (e.g. the trimmed body starts with `<!doctype`), or
+restrict the rewrite so `/assets/**` is never rewritten. The code-side check
+is more robust, since `firebase.json` is gitignored and exists only on one
+machine.
+
+### ⬜ 25. Every route declares the homepage as canonical — 🟡 medium (SEO)
+
+**File:** `src/index.html`
+
+`<link rel="canonical" href="https://starlithdev.web.app/">` is static, so
+`/aboutme`, `/projects`, `/skills` and `/contact` all tell search engines
+"the real page is `/`" — contradicting `sitemap.xml`, which lists them as
+separate URLs. Search engines usually honour the canonical and drop the
+subpages.
+
+**Fix:** update the canonical on `NavigationEnd` (one small service using
+`DOCUMENT`), or remove the tag.
+
+### ⬜ 26. Disclaimer strip polish — 🟢 low
+
+**File:** `src/app/components/home/home.scss`
+
+1. **Contrast 3.66:1** — text is `rgba(#efefe4, 0.42)` on `#0b0b0b` at
+   `0.7rem`; WCAG AA for small text needs 4.5:1. Alpha `0.55` gives 5.55:1,
+   `0.6` gives 6.43:1 — still quiet, but readable, which is the point of a
+   disclaimer.
+2. **Scrollbar offset** — the page now scrolls, so browsers with classic
+   (non-overlay) scrollbars show a permanent vertical scrollbar on Home.
+   `.home-component` and `.content` use `width: 100vw`, which *includes* the
+   scrollbar, so the menu sits about half a scrollbar right of centre (the
+   horizontal overflow is hidden by `body { overflow-x: hidden }`). Fix:
+   `width: 100%`. Not measurable in the tooling browser (overlay
+   scrollbars); the scrollbar itself is visible in the owner's screenshot.
+
+### ⬜ 27. Housekeeping — 🟢 low
+
+- **Unused images committed in `v1.0.1`:** `src/assets/images/og_cover.jpg`
+  (650 KB, a duplicate of `public/og_cover.jpg`) and
+  `src/assets/images/home_background.jpg` (231 KB). Nothing references
+  either, so they don't ship — but they bloat the public repository, the
+  same class of problem as commit `f464f7d`.
+- **Budget warning:** `home.scss` is 10.87 kB against the 10 kB warning
+  threshold (error at 15 kB) since the disclaimer styles were added. Either
+  raise `maximumWarning` to `12kB` or accept the warning.
+- **Typo** from item 12 is still present: `heigth="300px"` in
+  `content/prod/content/aboutme/profile.md`.
+
+### ⬜ 28. Menu items aren't links — 🟢 low (a11y / crawlability)
+
+**Files:** `main-menu-button.html`, section templates
+
+Home menu entries are `<div (click)>` inside `MainMenuButton`: not
+reachable with Tab, announced as plain text by screen readers, and not
+followable by crawlers (`sitemap.xml` compensates for discovery). Keyboard
+users are covered by the custom W/S/Enter handling on desktop only — see
+item 23 for when even that switches off. Worth doing together with item 16,
+which already needs a pass over this component.
+
+---
+
 ## ✅ Resolved
 
 ### ✅ 0. Commented-out aboutme template in the working copy
@@ -529,3 +740,10 @@ present) on separate lines.
    real problems right now, lower priority than everything else. Stays in
    the backlog, revisit when there's time or the next section forces
    synchronized edits across all four copies.
+10. ~~Items 19–21 (fan-tribute disclaimer, licensing, OG image)~~ — ✅ done
+    2026-09-01, deployed in `v1.0.1`.
+11. Item 22 (Back-button loop) — one-line fix, highest user impact of the
+    2026-09-13 review.
+12. Items 27 + 26 — housekeeping and strip polish, one small commit.
+13. Items 24, 23, 25 — each a small, independent change.
+14. Item 28 — together with item 16.

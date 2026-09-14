@@ -9,7 +9,7 @@ Documentation for the StarLith portfolio site — an interactive resume built wi
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Tech stack, project structure, components, services, data flow |
 | [CONTENT.md](CONTENT.md) | Content management: configs, markdown files, example vs prod content |
 | [DEPLOYMENT.md](DEPLOYMENT.md) | Build configurations and Firebase Hosting deployment |
-| [ISSUES.md](ISSUES.md) | Known issues and technical debt from the code review |
+| [ISSUES.md](ISSUES.md) | Known issues, technical debt and resolved fixes — code reviews of 2026-07-17 and 2026-09-13 |
 
 ## Quick Orientation
 

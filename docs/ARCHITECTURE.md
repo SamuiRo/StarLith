@@ -71,7 +71,7 @@ flowchart LR
 │   ├── index.html
 │   ├── main.ts
 │   └── styles.scss
-├── public/                             # Static files copied to build root (favicon, robots.txt, sitemap.xml)
+├── public/                             # Static files copied to build root as-is (favicon, robots.txt, sitemap.xml, og_cover.jpg)
 ├── angular.json                        # Build configs + asset mappings (content/* → assets/*)
 └── firebase.json                       # Firebase Hosting config (gitignored)
 ```
@@ -105,6 +105,20 @@ Enter) programmatically triggers a file download (`<a download>`) instead of
 `router.navigate()`. Both paths go through one `activateItem()` method, see
 [ISSUES.md](ISSUES.md), item 14.
 
+`Home` is two stacked blocks, so the page scrolls by a few dozen pixels:
+
+1. **First screen** (`.content`, exactly `100vh`) — title, menu and the
+   20-second keyboard hint (desktop only).
+2. **Disclaimer strip** (`.site-disclaimer`) — one thin line below the fold,
+   visible only after scrolling down, so it never competes with the menu.
+
+The keyboard hint is `position: absolute` inside `.content`, **not**
+`position: fixed`. `.home-component` carries `content-visibility: auto`, and
+its layout containment turns it into the containing block for `fixed`
+descendants — `fixed; bottom: 2rem` would resolve against the whole, taller
+component and land below the first screen. See [ISSUES.md](ISSUES.md),
+item 20.
+
 ## Content Section Components
 
 `Aboutme`, `Projects`, `Skills`, and `Contact` share the same design (currently
@@ -116,6 +130,9 @@ as four near-identical copies — see [ISSUES.md](ISSUES.md), item 5):
    parallel (`forkJoin`).
 3. Render the selected file with `<markdown [data]>`.
 4. On any HTTP error, fall back to hardcoded `# No Data` placeholders.
+   ⚠️ On Firebase a **missing markdown file is not an HTTP error**: the
+   catch-all rewrite answers `200` with `index.html`, which then gets
+   rendered as the section's content. See [ISSUES.md](ISSUES.md), item 24.
 
 Keyboard handling is implemented with a `window:keydown` `@HostListener`:
 `W`/`S`/arrows move the selection, `Esc` returns to `/home`.
@@ -140,6 +157,20 @@ across all 4 components, unlike the rest of their markup/logic. See
   channels with a "breathing" animation; intensity configurable via `@Input`.
 - **`MainMenuButton` component** — home menu button with activation timeline
   (ornamental lines, dots) and looping particle animation.
+
+## Static Assets: `src/assets/images/` vs `public/`
+
+The two folders are not interchangeable — the difference is hashing:
+
+| Folder | How it ships | Use it for |
+|---|---|---|
+| `src/assets/images/` | Only files referenced from component SCSS via `url()` are emitted, to `media/` with a **content hash** in the name (`home_background-3H6YBCUZ.webp`). Unreferenced files are not shipped | Anything a stylesheet uses — backgrounds. Replacing a file changes its hash, so browsers and the CDN pick up the new version immediately |
+| `public/` | Copied verbatim to the build root, **stable names**, no hash | Only files that need a fixed URL: `favicon.ico`, `robots.txt`, `sitemap.xml`, `og_cover.jpg` |
+
+`og_cover.jpg` (1300×630) is the Open Graph / Twitter preview referenced by
+absolute URL from `index.html` — link-preview caches key on that URL, so it
+must not be hashed. Don't move backgrounds into `public/`: they would lose
+cache-busting. See [ISSUES.md](ISSUES.md), item 21.
 
 ## Environments & Content Switching
 

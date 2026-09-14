@@ -52,9 +52,12 @@ Detailed docs live in [`docs/`](docs/README.md): [architecture](docs/ARCHITECTUR
 │   │   ├── projects/
 │   │   ├── skills/
 │   │   └── contact/
+│   ├── assets/images/         # Background art (referenced from SCSS, hashed at build)
 │   └── environments/
 │       ├── environment.ts
 │       └── environment.prod.ts
+├── public/                    # Copied to the site root as-is: favicon, robots.txt, sitemap.xml, og_cover.jpg
+└── docs/                      # Architecture, content, deployment, known issues
 ```
 
 ## 🚀 Quick Start

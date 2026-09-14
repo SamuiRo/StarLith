@@ -68,6 +68,12 @@ Rules:
 - If the config or any listed file fails to load, the whole section falls back
   to `# No Data` placeholders (one bad path breaks the section — check the
   browser console for the failing URL).
+- ⚠️ **In production a misspelled `contentFile` does not fall back.** Firebase
+  answers a missing file with `200` + `index.html`, so the section shows
+  garbage instead of `# No Data`, and `npm run start:prod` won't reproduce it
+  (the dev server returns a real `404`). After adding or renaming a file,
+  open that exact URL on the deployed site once. See
+  [ISSUES.md](ISSUES.md), item 24.
 
 ## Markdown Files
 
@@ -86,7 +92,7 @@ root and must include the served content tree (`assets/prod/...` or
 
 ### Project File Convention
 
-Project files follow this structure (see `content/projects/*.md`):
+Project files follow this structure (see `content/<tree>/content/projects/*.md`):
 
 ```markdown
 # Project Title
@@ -117,6 +123,32 @@ Project files follow this structure (see `content/projects/*.md`):
 
 **Preview prod content locally:** `npm run start:prod` (serves with
 `assets/prod/` as the data path).
+
+## Third-Party IP Guardrails
+
+The site is an unofficial fan tribute to the visual language of the NieR
+series. That position holds only while the content stays original, so these
+rules apply to every markdown file and image:
+
+- **Own words and own images only.** No game quotes, screenshots, logos,
+  character art, textures, UI sprites or music — not even attributed.
+  Recreating a *style* is fine; copying *material* is not.
+- **The non-affiliation statement lives in three places — keep them in
+  sync** when rewording:
+  1. `content/prod/content/aboutme/faq.md` — "Are you a NieR series fan?"
+     (the long version);
+  2. the disclaimer strip below the fold on Home
+     (`src/app/components/home/home.html`);
+  3. the root `README.md` — the note under the intro and the `Disclaimer`
+     section.
+- **License wording:** the FAQ may invite people to fork the *code* (GPL
+  v3), never "the design" — the license can only cover what the author has
+  the right to license. The README spells out that it grants no rights to
+  third-party IP.
+- **No commercial calls to action here** — no pricing, "Hire me" or "Get a
+  quote" blocks. Stating availability for full-time or contract work (the
+  "Are you available for hire?" FAQ entry) is fine; selling services through
+  the tribute interface is not.
 
 ## Downloadable Files (CV)
 
