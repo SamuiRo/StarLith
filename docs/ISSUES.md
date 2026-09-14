@@ -570,7 +570,7 @@ production content tree (19 markdown files, plus CV, photo and OG image —
 all `200`), zero console errors across routes, unknown routes redirect
 correctly. The items below are ranked by user impact.
 
-### ⬜ 22. Back button loops through the boot screen — 🟠 high
+### ✅ 22. Back button loops through the boot screen — 🟠 high
 
 **File:** `src/app/components/loading/loading.ts:59`
 
@@ -589,6 +589,17 @@ the final `navigate`.
 Confirmed by reading the code; a live repro in the tooling browser wasn't
 possible (the hidden preview pane throttles `requestAnimationFrame`, so the
 animejs sequence never finishes there).
+
+**Resolved 2026-09-14:** `navigate(['/home'], { replaceUrl: true })`, and a
+`destroyed` flag set in `ngOnDestroy` is checked before the sequence starts
+and again right before navigating, so a sequence that outlives the component
+can't override a later navigation.
+
+Verified on the dev server (`start:prod`): opened `/robots.txt` as a stand-in
+referrer, then `/`; the sequence ran to `/home` with `history.length`
+unchanged (3 → 3, i.e. `/loading` was replaced rather than `/home` pushed on
+top); **Back** from `/home` went straight to `/robots.txt`, no boot screen.
+(This time the animation did complete in the throttled pane — slowly, ~45 s.)
 
 ### ⬜ 23. Keyboard navigation disabled on touch-capable desktops — 🟡 medium
 
@@ -742,8 +753,7 @@ present) on separate lines.
    synchronized edits across all four copies.
 10. ~~Items 19–21 (fan-tribute disclaimer, licensing, OG image)~~ — ✅ done
     2026-09-01, deployed in `v1.0.1`.
-11. Item 22 (Back-button loop) — one-line fix, highest user impact of the
-    2026-09-13 review.
+11. ~~Item 22 (Back-button loop)~~ — ✅ done 2026-09-14.
 12. Items 27 + 26 — housekeeping and strip polish, one small commit.
 13. Items 24, 23, 25 — each a small, independent change.
 14. Item 28 — together with item 16.

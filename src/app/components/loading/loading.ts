@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TypingAnimation } from '../../services/typing-animation/typing-animation';
 import { ScanLineEffect } from '../scan-line-effect/scan-line-effect';
@@ -12,8 +12,10 @@ import { ChromaticAberration } from '../chromatic-aberration/chromatic-aberratio
   templateUrl: './loading.html',
   styleUrl: './loading.scss',
 })
-export class Loading implements AfterViewInit {
+export class Loading implements AfterViewInit, OnDestroy {
   @ViewChild('consoleOutput') consoleOutput!: ElementRef;
+
+  private destroyed = false;
 
   constructor(
     private router: Router,
@@ -42,8 +44,12 @@ export class Loading implements AfterViewInit {
     }, 100);
   }
 
+  ngOnDestroy(): void {
+    this.destroyed = true;
+  }
+
   async startLoadingSequence(): Promise<void> {
-    if (!this.consoleOutput?.nativeElement) return;
+    if (this.destroyed || !this.consoleOutput?.nativeElement) return;
     await this.typingAnimation.createSequenceAnimation(
       this.consoleOutput.nativeElement,
       this.systems,
@@ -56,7 +62,13 @@ export class Loading implements AfterViewInit {
 
     await this.delay(500);
 
-    this.router.navigate(['/home']);
+    // The sequence outlives the component: don't hijack a navigation that
+    // already happened while it was typing.
+    if (this.destroyed) return;
+
+    // Replace /loading in history instead of pushing /home on top of it,
+    // otherwise Back on /home replays the boot screen and pushes /home again.
+    this.router.navigate(['/home'], { replaceUrl: true });
   }
 
   private delay(ms: number): Promise<void> {
