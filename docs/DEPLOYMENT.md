@@ -16,10 +16,9 @@
 - **development** (default): sourcemaps, no optimization.
 - **production**: replaces `environment.ts` → `environment.prod.ts`
   (switches `dataPath` to `assets/prod/`), output hashing, budgets
-  (initial bundle warn 500 kB / error 1 MB; component styles warn 10 kB /
-  error 15 kB). `home.scss` currently sits at ~10.9 kB, so every production
-  build prints one budget warning — harmless, tracked in
-  [ISSUES.md](ISSUES.md), item 27.
+  (initial bundle warn 500 kB / error 1 MB; component styles warn 12 kB /
+  error 15 kB — the warning was raised from 10 kB when the disclaimer strip
+  pushed `home.scss` to ~10.9 kB, see [ISSUES.md](ISSUES.md), item 27).
 - **test**: replaces `environment.ts` → `environment.test.ts`, sourcemaps,
   no optimization.
 

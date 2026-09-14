@@ -466,8 +466,8 @@ startup, there's no hot config reload here.
 
 ### ⬜ 12. Typos / minor details
 
-- `content/prod/content/aboutme/profile.md:1` — `heigth` → `height` in the
-  `<img>` attribute.
+- ~~`content/prod/content/aboutme/profile.md:1` — `heigth` → `height` in the
+  `<img>` attribute~~ — ✅ fixed 2026-09-14 (item 27).
 - `package.json` → `"name": "star-lith"`, while the `angular.json` project
   is `StarLith`; not a problem, just an inconsistency.
 
@@ -648,7 +648,7 @@ subpages.
 **Fix:** update the canonical on `NavigationEnd` (one small service using
 `DOCUMENT`), or remove the tag.
 
-### ⬜ 26. Disclaimer strip polish — 🟢 low
+### ✅ 26. Disclaimer strip polish — 🟢 low
 
 **File:** `src/app/components/home/home.scss`
 
@@ -664,7 +664,19 @@ subpages.
    `width: 100%`. Not measurable in the tooling browser (overlay
    scrollbars); the scrollbar itself is visible in the owner's screenshot.
 
-### ⬜ 27. Housekeeping — 🟢 low
+**Resolved 2026-09-14:** text alpha `0.42` → `0.55` (5.55:1);
+`.home-component` and `.content` → `width: 100%`. `loading.scss` keeps
+`100vw` — that page never scrolls, so no scrollbar can appear there.
+
+Verified on the dev server with a forced classic 17 px scrollbar
+(`html { overflow-y: scroll }` + `::-webkit-scrollbar`): with the old `100vw`
+the component was 1280 px inside a 1263 px viewport and the title sat
+**8.5 px** right of centre; with `100%` it's 1263 px and **0 px** off.
+Computed disclaimer colour `rgba(239, 239, 228, 0.55)`. At 375 px: no
+horizontal overflow (`scrollWidth` 375), title centred, strip wraps to two
+lines (79 px).
+
+### ✅ 27. Housekeeping — 🟢 low
 
 - **Unused images committed in `v1.0.1`:** `src/assets/images/og_cover.jpg`
   (650 KB, a duplicate of `public/og_cover.jpg`) and
@@ -676,6 +688,15 @@ subpages.
   raise `maximumWarning` to `12kB` or accept the warning.
 - **Typo** from item 12 is still present: `heigth="300px"` in
   `content/prod/content/aboutme/profile.md`.
+
+**Resolved 2026-09-14:** both unused images removed with `git rm`;
+`anyComponentStyle.maximumWarning` raised to `12kB` (error threshold stays
+15 kB); `profile.md` now reads `width="300" height="300"` — also dropped the
+`px`, which isn't valid in HTML size attributes. `profile.md` is under the
+gitignored `content/prod/`, so that fix reaches the site only with the next
+`build:prod` + deploy. `npm run build:prod` finishes without the budget
+warning; the output still has all five hashed backgrounds and
+`og_cover.jpg` at the root.
 
 ### ⬜ 28. Menu items aren't links — 🟢 low (a11y / crawlability)
 
@@ -754,6 +775,6 @@ present) on separate lines.
 10. ~~Items 19–21 (fan-tribute disclaimer, licensing, OG image)~~ — ✅ done
     2026-09-01, deployed in `v1.0.1`.
 11. ~~Item 22 (Back-button loop)~~ — ✅ done 2026-09-14.
-12. Items 27 + 26 — housekeeping and strip polish, one small commit.
+12. ~~Items 27 + 26 (housekeeping and strip polish)~~ — ✅ done 2026-09-14.
 13. Items 24, 23, 25 — each a small, independent change.
 14. Item 28 — together with item 16.
