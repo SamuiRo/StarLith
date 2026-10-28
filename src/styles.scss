@@ -21,6 +21,15 @@ html {
   height: 100%;
 }
 
+// Toggled by Home: the page still scrolls, only the bar is hidden.
+html.hide-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 img {
   box-shadow: 3px 3px 0 rgba($color-primary, 0.6);
 }

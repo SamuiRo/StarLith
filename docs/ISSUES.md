@@ -709,6 +709,26 @@ users are covered by the custom W/S/Enter handling on desktop only — see
 item 23 for when even that switches off. Worth doing together with item 16,
 which already needs a pass over this component.
 
+### ✅ 29. Studio menu item + hidden scrollbar on Home
+
+**Files:** `src/app/components/home/home.ts`, `src/styles.scss`
+
+1. **Studio entry:** the owner's studio lives on its own subdomain, so the
+   menu got a third kind of item next to routes and the CV download —
+   `external: true`, opened with `window.open(..., '_blank', 'noopener')`
+   so the portfolio stays open. Placed between Skills and Contact.
+2. **Visible scrollbar on Home** (owner's screenshot, classic scrollbars):
+   the page still has to scroll — the disclaimer strip is below the fold on
+   purpose (items 19–20) — so only the bar is hidden. Home adds
+   `hide-scrollbar` to `<html>` on init and removes it on destroy;
+   `styles.scss` hides the bar for that class (`scrollbar-width: none` +
+   `::-webkit-scrollbar`). Other pages keep their scrollbars.
+
+**Resolved 2026-10-28.** Verified on the dev server with a forced classic
+17 px scrollbar: without the class the bar takes 17 px, with it 0 px; the
+page still scrolls 54 px and the strip comes into view. Navigating Home →
+Projects removes the class, Back restores it.
+
 ---
 
 ## ✅ Resolved

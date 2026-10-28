@@ -8,6 +8,7 @@ interface MenuItem {
   label: string;
   route: string;
   download?: boolean;
+  external?: boolean;
 }
 
 interface KeyboardHint {
@@ -16,6 +17,9 @@ interface KeyboardHint {
 }
 
 const HINT_DURATION_MS = 20000;
+// Home scrolls on purpose (the disclaimer sits below the fold), but the
+// scrollbar itself shouldn't show; styled globally in styles.scss.
+const HIDE_SCROLLBAR_CLASS = 'hide-scrollbar';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +34,7 @@ export class Home implements OnInit, OnDestroy {
     { label: 'About Me', route: '/aboutme' },
     { label: 'Projects', route: '/projects' },
     { label: 'Skills', route: '/skills' },
+    { label: 'Studio', route: 'https://studio.starlith.net', external: true },
     { label: 'Contact', route: '/contact' },
     { label: 'Download CV', route: this.cvPath, download: true },
   ];
@@ -49,6 +54,7 @@ export class Home implements OnInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    document.documentElement.classList.add(HIDE_SCROLLBAR_CLASS);
     this.checkIfMobile();
 
     if (!this.isMobile) {
@@ -58,6 +64,7 @@ export class Home implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    document.documentElement.classList.remove(HIDE_SCROLLBAR_CLASS);
     if (this.hintTimeoutId !== null) {
       clearTimeout(this.hintTimeoutId);
     }
@@ -145,6 +152,8 @@ export class Home implements OnInit, OnDestroy {
   private activateItem(item: MenuItem): void {
     if (item.download) {
       this.downloadFile(item.route);
+    } else if (item.external) {
+      window.open(item.route, '_blank', 'noopener');
     } else {
       this.router.navigate([item.route]);
     }
